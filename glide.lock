@@ -1,13 +1,22 @@
-hash: 976decfaf173d97d2e4572399490637aa12e217312a7d8b28813780a738e1151
-updated: 2017-08-24T17:28:45.8117156-05:00
+hash: 11b48d857db0c8c6ae7c52787cc32eaeb4f39c6adbf6dfa64358f649b4ed1ae5
+updated: 2017-01-27T20:06:58.5779336-06:00
 imports:
+- name: github.com/aead/siphash
+  version: c12524e9e0f3f057ac288302833ea82abc583623
 - name: github.com/btcsuite/btclog
-  version: 84c8d2346e9fc8c7b947e243b9c24e6df9fd206a
+  version: 73889fb79bd687870312b6e40effcecffbd57d30
+- name: github.com/btcsuite/btcrpcclient
+  version: 5ce0ed600997eafaed25ad4936c1d84ec6ad2b5a
+  repo: ssh://github.com/companyzero/btcrpcclientln
+  vcs: git
 - name: github.com/btcsuite/btcutil
-  version: 501929d3d046174c3d39f0ea54ece471aa17238c
+  version: 5454b20ac2cb650b9b9aada2247f3c4a624f8c9b
+  repo: ssh://git@github.com/companyzero/btcutilln
+  vcs: git
   subpackages:
   - base58
   - bloom
+  - gcs
   - hdkeychain
 - name: github.com/btcsuite/go-socks
   version: 4720035b7bfd2a9bb130b1c184f8bbe41b6f0d0f
