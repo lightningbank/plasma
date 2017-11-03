@@ -10,7 +10,8 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/Roasbeef/btcd/netsync"
+	"github.com/roasbeef/btcd/netsync"
+
 	"github.com/roasbeef/btcd/addrmgr"
 	"github.com/roasbeef/btcd/blockchain"
 	"github.com/roasbeef/btcd/blockchain/indexers"
