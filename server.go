@@ -22,7 +22,6 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/Roasbeef/btcd/netsync"
 	"github.com/roasbeef/btcd/addrmgr"
 	"github.com/roasbeef/btcd/blockchain"
 	"github.com/roasbeef/btcd/blockchain/indexers"
@@ -33,6 +32,7 @@ import (
 	"github.com/roasbeef/btcd/mempool"
 	"github.com/roasbeef/btcd/mining"
 	"github.com/roasbeef/btcd/mining/cpuminer"
+	"github.com/roasbeef/btcd/netsync"
 	"github.com/roasbeef/btcd/peer"
 	"github.com/roasbeef/btcd/txscript"
 	"github.com/roasbeef/btcd/wire"
@@ -742,7 +742,7 @@ func (sp *serverPeer) OnGetHeaders(_ *peer.Peer, msg *wire.MsgGetHeaders) {
 // OnGetCFilter is invoked when a peer receives a getcfilter bitcoin message.
 func (sp *serverPeer) OnGetCFilter(_ *peer.Peer, msg *wire.MsgGetCFilter) {
 	// Ignore getcfilter requests if not in sync.
-	if !sp.server.blockManager.IsCurrent() {
+	if !sp.server.syncManager.IsCurrent() {
 		return
 	}
 
@@ -764,12 +764,12 @@ func (sp *serverPeer) OnGetCFilter(_ *peer.Peer, msg *wire.MsgGetCFilter) {
 // OnGetCFHeaders is invoked when a peer receives a getcfheader bitcoin message.
 func (sp *serverPeer) OnGetCFHeaders(_ *peer.Peer, msg *wire.MsgGetCFHeaders) {
 	// Ignore getcfilterheader requests if not in sync.
-	if !sp.server.blockManager.IsCurrent() {
+	if !sp.server.syncManager.IsCurrent() {
 		return
 	}
 
 	// Attempt to look up the height of the provided stop hash.
-	chain := sp.server.blockManager.chain
+	chain := sp.server.chain
 	endIdx := int32(math.MaxInt32)
 	height, err := chain.BlockHeightByHash(&msg.HashStop)
 	if err == nil {
@@ -877,7 +877,7 @@ func (sp *serverPeer) OnGetCFHeaders(_ *peer.Peer, msg *wire.MsgGetCFHeaders) {
 func (sp *serverPeer) OnGetCFTypes(_ *peer.Peer, msg *wire.MsgGetCFTypes) {
 	// Ignore getcftypes requests if cfg.NoCFilters is set or we're not in
 	// sync.
-	if cfg.NoCFilters || !sp.server.blockManager.IsCurrent() {
+	if cfg.NoCFilters || !sp.server.syncManager.IsCurrent() {
 		return
 	}
 
